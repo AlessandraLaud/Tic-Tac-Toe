@@ -28,10 +28,16 @@ class GameProvider with ChangeNotifier {
 
   void makeMove(int position) {
     List<BoardPiece> updatedBoard = getUpdatedBoard(position);
-    Player currentPlayer = getNextPlayer();
-    BoardPiece currentPlayerPiece = getNextPlayerPiece();
     bool isWin = checkForWin();
     bool isDraw = checkForDraw(isWin);
+    Player currentPlayer = getNextPlayer();
+    BoardPiece currentPlayerPiece = getNextPlayerPiece();
+
+    // if there is a win, do not toggle ethe player
+    if (isWin) {
+      currentPlayer = game.currentPlayer;
+      currentPlayerPiece = game.currentPlayerPiece;
+    }
 
     // if the spot is not filled, update the game
     if (!error) {
